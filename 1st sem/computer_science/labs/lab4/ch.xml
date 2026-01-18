@@ -1,0 +1,35 @@
+<root>
+  <tuesday>
+    <fclass>
+      <format>Лекция</format>
+      <lesson>Основы дискретной математики (продвинутый уровень)</lesson>
+      <professor>Карпов Дмитрий Валерьевич</professor>
+      <auditory>Ауд. 1404, Кронверкский пр., д.49, лит.А</auditory>
+      <time>17:00-18:30</time>
+    </fclass>
+    <sclass>
+      <format>Практика</format>
+      <lesson>Основы дискретной математики (продвинутый уровень)</lesson>
+      <professor>Карпов Дмитрий Валерьевич</professor>
+      <auditory>Ауд. 1404, Кронверкский пр., д.49, лит.А</auditory>
+      <time>18:40-20:10</time>
+    </sclass>
+  </tuesday>
+  <thursday>
+    <fclass>
+      <format>Практика</format>
+      <lesson>История русской культуры в контексте мировой культуры</lesson>
+      <professor>Жиркова Галина Петровна</professor>
+      <auditory>Ауд. 2433, Кронверкский пр., д.49, лит.А</auditory>
+      <time>10:00-11:30</time>
+    </fclass>
+    <sclass>
+      <format>Лекция</format>
+      <lesson>История русской культуры в контексте мировой культуры</lesson>
+      <professor>Жиркова Галина Петровна</professor>
+      <auditory>Ауд. Lemon Classroom (1419), Кронверкский пр., д.49, лит.А</auditory>
+      <time>11:40-13:10</time>
+    </sclass>
+  </thursday>
+</root>
+
