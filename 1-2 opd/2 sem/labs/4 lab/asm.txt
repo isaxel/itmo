@@ -1,0 +1,52 @@
+ORG 0x05B
+START: 
+	CLA
+	ST result
+	LD x
+	INC
+	PUSH
+	CALL $function
+	POP
+	ADD result
+	ST result
+	LD y
+	DEC
+	PUSH
+	CALL $function
+	POP
+	INC
+	ADD result
+	ST result
+	LD z
+	INC
+	PUSH
+	CALL $function
+	POP
+	SUB result
+	ST result
+	HLT
+	z: WORD 0xFF70
+	y: WORD 0xF66D
+	x: WORD 0x0696
+	result: WORD 0x0000
+
+
+ORG 0x6B4
+function:
+	LD &1
+	BEQ exit1
+	BPL exit2
+	exit1: SUB var_1
+		BMI exit3
+		JUMP return
+		exit3: ADD var_1
+		exit2: ASL
+			ADD &1
+			SUB var_2
+			JUMP save
+			return: LD var_1
+			save: ST &1
+			RET
+		var_1: WORD 0xF66D
+		var_2: WORD 0x004C
+

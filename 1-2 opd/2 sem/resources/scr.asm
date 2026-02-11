@@ -1,0 +1,60 @@
+ORG 0x0020
+LENGHT: WORD 0x000F
+F: WORD 0x0148
+P1: WORD 0x0000
+P2: WORD 0x0000
+SUM1: WORD 0x0000
+SUM2: WORD 0x0000
+COUNT: WORD 0x0000
+
+START: CLA
+      LD (F)+
+      ST $P1
+      LD $LENGHT
+      DEC
+      ST $LENGHT
+      LD (F)+
+      ST $P2
+      BNC FUNC
+POOP: LOOP $LENGHT
+      JUMP $START
+      HLT
+      
+FUNC:   CALL $SUMMING
+        JUMP $POOP
+        
+
+SUMMING: LD $P1
+         ADD $SUM1
+         ST $SUM1
+         LD $P2
+         ADC $SUM2
+         ST $SUM2
+         RET
+  
+
+          
+ORG 0x0148       
+WORD 0xCD15
+WORD 0x075B
+
+WORD 0x0D48
+WORD 0xFA5E
+
+WORD 0xFFFF
+WORD 0x7FFF
+
+WORD 0xFFFF
+WORD 0xFFFF  
+
+WORD 0x0000
+WORD 0x0000
+
+WORD 0x0000
+WORD 0x8000
+
+WORD 0x5678
+WORD 0x1234
+
+WORD 0xA988
+WORD 0xEDCB
