@@ -104,12 +104,9 @@ def input_float(prompt):
 
 def print_table(x, y, title=""):
     print(f"\n{title}")
-    print("-" * 50)
     print(f"{'x':>10} {'y':>20}")
-    print("-" * 50)
     for xi, yi in zip(x, y):
         print(f"{xi:10.6f} {yi:20.10f}")
-    print("-" * 50)
 
 
 def plot_solution(x, y_approx, exact_func, x0, y0, method_name, eq_name):
