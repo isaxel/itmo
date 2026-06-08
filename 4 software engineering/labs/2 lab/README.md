@@ -1,5 +1,7 @@
 ## запуск git_scr.sh:
-
+```bash
+./git_scr.sh
+```
 
 ## запуск svn_scr.sh:
 
