@@ -1,0 +1,29 @@
+name: "assert capital_case_pstr('python programming\n') == ('Python Programming', '')"
+limit: 4000
+memory_size: 0x1000
+memory_mapped_io:
+  0x80: [112, 121, 116, 104, 111, 110, 32, 112, 114, 111, 103, 114, 97, 109, 109, 105, 110, 103, 10]
+  0x84: []
+reports:
+  # - name: Step-by-step log
+  #   slice: all
+  #   view: |
+  #     T={T:hex} S={S:hex} A={A:hex} B={B:hex} R={R:hex} | {pc:label}
+  #     {pc}:	{instruction}
+  
+  - name: Check results
+    slice: last
+    filter:
+      - state
+    view: |
+      numio[0x80]: {io:0x80:dec}
+      numio[0x84]: {io:0x84:dec}
+      symio[0x80]: {io:0x80:sym}
+      symio[0x84]: {io:0x84:sym}
+      {memory:0:31}
+    assert: |
+      numio[0x80]: [] >>> []
+      numio[0x84]: [] >>> [80,121,116,104,111,110,32,80,114,111,103,114,97,109,109,105,110,103]
+      symio[0x80]: "" >>> ""
+      symio[0x84]: "" >>> "Python Programming"
+      mem[0..31]: 	12 50 79 74 68 6f 6e 20 50 72 6f 67 72 61 6d 6d 69 6e 67 5f 5f 5f 5f 5f 5f 5f 5f 5f 5f 5f 5f 5f
