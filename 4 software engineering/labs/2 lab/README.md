@@ -67,4 +67,6 @@ svn status
 --soft is discarding last commit, 
 --mix is discarding last commit and add, 
 --hard is discarding last commit,add and any changes you made on the codes which is the same with git checkout HEAD
-
+5. Какие есть виды конфликтов при merge и способы решения? в презе:
+    - содержимого (тут договориться с изменившим файл человеком)
+    - структуры (в уд репо файл перемещен а вы в своем локальном меняете) - тут тоже согласовать :/
