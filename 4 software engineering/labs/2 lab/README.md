@@ -54,3 +54,17 @@ svn log -v
 svn info
 svn status
 ```
+
+# Вопросы 
+
+1. Какие есть СКВ? в лекциях и презе:
+    - на основе файловой системы
+    - централизованные (svn)
+    - распределенные (git). эта по управлению делится на централизованную, с интеграционными менеджерами и с диктатором и лейтинантами
+2. Какие типы тегов существуют? [статья](https://timeweb.cloud/tutorials/git/rabota-s-git-tegami-sozdanie-udalenie-ispolzovanie)
+3. Что находится в папке .git? [статья](https://www.git-tower.com/blog/exploring-the-git-directory)
+4. В чем различя reset --soft, --hard, --mixed? [обсуждение](https://stackoverflow.com/questions/3528245/whats-the-difference-between-git-reset-mixed-soft-and-hard) 
+--soft is discarding last commit, 
+--mix is discarding last commit and add, 
+--hard is discarding last commit,add and any changes you made on the codes which is the same with git checkout HEAD
+
