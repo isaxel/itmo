@@ -4,7 +4,7 @@ buffer:     .byte  '________________________________'
 
 prev_alpha: .word  0          \ prev char was a letter
 low_f:      .word  0          \ cur char is 'a'..'z'
-up_f:       .word  0          \ cur char is 'A'..'Z'
+up_f:       .word  0
 cur:        .word  0
 slen:       .word  0
 

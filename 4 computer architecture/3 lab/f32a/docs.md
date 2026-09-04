@@ -131,7 +131,7 @@ f32a:return-stack-max: 3
   - **Операция (без EAM):** `dataStack.push(dataStack.pop() + dataStack.pop()), установить флаг переноса`
   - **Операция (EAM):** `dataStack.push(dataStack.pop() + dataStack.pop() + carry), установить флаг переноса`
 - **Шаг умножения**
-  - **Синтаксис:** `+`*
+  - **Синтаксис:** `+*`
   - **Описание:** Выполнить шаг умножения.
   - **Операция:** `T <- T + (if A[0] then S else 0); A <- A >> 1; if T[0] then A[31] <- 1 else A[31] <- 0; T <- T >> 1`
 - **Шаг деления**
@@ -151,7 +151,7 @@ f32a:return-stack-max: 3
       - `T[0] <- 1`
   - **[Пример на Python](https://github.com/ryukzak/wrench/blob/master/example/step-by-step-div.py)**
 - **Сдвиг влево**
-  - **Синтаксис:** `2`*
+  - **Синтаксис:** `2*`
   - **Описание:** Сдвинуть верхнее значение стека данных влево на один бит.
   - **Операция:** `dataStack.push(dataStack.pop() << 1)`
 - **Сдвиг вправо**

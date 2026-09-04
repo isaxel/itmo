@@ -5,12 +5,6 @@ memory_mapped_io:
   0x80: [112, 121, 116, 104, 111, 110, 32, 112, 114, 111, 103, 114, 97, 109, 109, 105, 110, 103, 10]
   0x84: []
 reports:
-  # - name: Step-by-step log
-  #   slice: all
-  #   view: |
-  #     T={T:hex} S={S:hex} A={A:hex} B={B:hex} R={R:hex} | {pc:label}
-  #     {pc}:	{instruction}
-  
   - name: Check results
     slice: last
     filter:
