@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="JUnit Jupiter" tests="21" skipped="0" failures="0" errors="0" time="0.298" hostname="DESKTOP-LS9L5JS" timestamp="2026-09-11T21:48:13">
+<properties>
+<property name="file.encoding" value="Cp1251"/>
+<property name="file.separator" value="\"/>
+<property name="java.class.path" value="C:\Users\irina\Desktop\itmo\4 software engineering\labs\3 lab\lib\test\junit-platform-console-standalone-1.10.2.jar"/>
+<property name="java.class.version" value="61.0"/>
+<property name="java.home" value="C:\Program Files\Java\jdk-17"/>
+<property name="java.io.tmpdir" value="C:\Users\irina\AppData\Local\Temp\"/>
+<property name="java.library.path" value="C:\Program Files\Java\jdk-17\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Users\irina\.cabal\bin;C:\Users\irina\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\irina\bin;C:\Users\irina\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand;C:\Users\irina\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\copilotCli;C:\Python314\Scripts;C:\Python314;C:\Program Files\Java\jdk-17\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files\WireGuard;C:\Program Files\dotnet;C:\Program Files\PuTTY;C:\ProgramData\chocolatey\bin;C:\Program Files\PostgreSQL\17\bin;C:\Program Files\Microsoft SQL Server\170\Tools\Binn;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn;C:\Program Files\Go\bin;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\nodejs;C:\MinGW\bin;C:\MinGW\bin;C:\MinGW\bin;C:\Program Files\cursor\resources\app\bin;C:\Program Files\Git\cmd;C:\Program Files\LLVM\bin;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit;C:\Program Files\TortoiseSVN\bin;C:\Program Files\apache-ant-1.10.18\bin;C:\WINDOWS\System32\OpenSSH;C:\texlive\2026\bin\windows;C:\Users\irina\AppData\Local\Programs\Python\Python311\Scripts;C:\Users\irina\AppData\Local\Programs\Python\Python311;C:\Users\irina\AppData\Local\Microsoft\WindowsApps;C:\Users\irina\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2022.2.1\bin;C:\Users\irina\AppData\Roaming\Programs\Zero Install;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.1.1\bin;C:\Users\irina\AppData\Local\GitHubDesktop\bin;C:\Users\irina\AppData\Local\Microsoft\WindowsApps;C:\Users\irina\.dotnet\tools;C:\Users\irina\go\bin;C:\Users\irina\AppData\Roaming\npm;C:\Users\irina\AppData\Local\Programs\MiKTeX\miktex\bin\x64;C:\ghcup\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl;."/>
+<property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+<property name="java.runtime.version" value="17.0.11+7-LTS-207"/>
+<property name="java.specification.name" value="Java Platform API Specification"/>
+<property name="java.specification.vendor" value="Oracle Corporation"/>
+<property name="java.specification.version" value="17"/>
+<property name="java.vendor" value="Oracle Corporation"/>
+<property name="java.vendor.url" value="https://java.oracle.com/"/>
+<property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+<property name="java.version" value="17.0.11"/>
+<property name="java.version.date" value="2024-04-16"/>
+<property name="java.vm.compressedOopsMode" value="Zero based"/>
+<property name="java.vm.info" value="mixed mode, sharing"/>
+<property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+<property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+<property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+<property name="java.vm.specification.version" value="17"/>
+<property name="java.vm.vendor" value="Oracle Corporation"/>
+<property name="java.vm.version" value="17.0.11+7-LTS-207"/>
+<property name="jdk.debug" value="release"/>
+<property name="line.separator" value="
+"/>
+<property name="native.encoding" value="Cp1251"/>
+<property name="os.arch" value="amd64"/>
+<property name="os.name" value="Windows 11"/>
+<property name="os.version" value="10.0"/>
+<property name="path.separator" value=";"/>
+<property name="sun.arch.data.model" value="64"/>
+<property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-17\bin"/>
+<property name="sun.cpu.endian" value="little"/>
+<property name="sun.cpu.isalist" value="amd64"/>
+<property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+<property name="sun.java.command" value="C:\Users\irina\Desktop\itmo\4 software engineering\labs\3 lab\lib\test\junit-platform-console-standalone-1.10.2.jar --class-path C:\Users\irina\Desktop\itmo\4 software engineering\labs\3 lab\ant-build\classes\main;C:\Users\irina\Desktop\itmo\4 software engineering\labs\3 lab\ant-build\classes\test;C:\Users\irina\Desktop\itmo\4 software engineering\labs\3 lab\lib\compile\jakarta.jakartaee-api-10.0.0.jar;C:\Users\irina\Desktop\itmo\4 software engineering\labs\3 lab\lib\compile\lombok-1.18.34.jar;C:\Users\irina\Desktop\itmo\4 software engineering\labs\3 lab\lib\runtime\gson-2.8.9.jar;C:\Users\irina\Desktop\itmo\4 software engineering\labs\3 lab\lib\runtime\jquery-3.6.0.jar;C:\Users\irina\Desktop\itmo\4 software engineering\labs\3 lab\lib\runtime\postgresql-42.7.2.jar;C:\Users\irina\Desktop\itmo\4 software engineering\labs\3 lab\lib\runtime\primefaces-14.0.5.jar --scan-class-path=ant-build/classes/test --reports-dir=ant-build/reports/junit --details=tree --disable-ansi-colors"/>
+<property name="sun.java.launcher" value="SUN_STANDARD"/>
+<property name="sun.jnu.encoding" value="Cp1251"/>
+<property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+<property name="sun.os.patch.level" value=""/>
+<property name="user.country" value="US"/>
+<property name="user.dir" value="C:\Users\irina\Desktop\itmo\4 software engineering\labs\3 lab"/>
+<property name="user.home" value="C:\Users\irina"/>
+<property name="user.language" value="en"/>
+<property name="user.name" value="irina"/>
+<property name="user.script" value=""/>
+<property name="user.timezone" value="Europe/Moscow"/>
+<property name="user.variant" value=""/>
+</properties>
+<testcase name="pointsInsideArea(double, double, double)[6]" classname="isaxel.models.CheckPointTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.models.CheckPointTest]/[test-template:pointsInsideArea(double, double, double)]/[test-template-invocation:#6]
+display-name: (0; -3), R=3 -> внутри
+]]></system-out>
+</testcase>
+<testcase name="pointsOutsideArea(double, double, double)[5]" classname="isaxel.models.CheckPointTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.models.CheckPointTest]/[test-template:pointsOutsideArea(double, double, double)]/[test-template-invocation:#5]
+display-name: (1.6; 3), R=3 -> снаружи
+]]></system-out>
+</testcase>
+<testcase name="describeOutsidePoint()" classname="isaxel.MainTest" time="0.002">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.MainTest]/[method:describeOutsidePoint()]
+display-name: Описание результата для точки вне области
+]]></system-out>
+</testcase>
+<testcase name="pointsInsideArea(double, double, double)[5]" classname="isaxel.models.CheckPointTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.models.CheckPointTest]/[test-template:pointsInsideArea(double, double, double)]/[test-template-invocation:#5]
+display-name: (0.5; -1), R=3 -> внутри
+]]></system-out>
+</testcase>
+<testcase name="pointsOutsideArea(double, double, double)[4]" classname="isaxel.models.CheckPointTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.models.CheckPointTest]/[test-template:pointsOutsideArea(double, double, double)]/[test-template-invocation:#4]
+display-name: (-1; -1), R=3 -> снаружи
+]]></system-out>
+</testcase>
+<testcase name="calculateFillsMetadata()" classname="isaxel.models.CheckPointTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.models.CheckPointTest]/[method:calculateFillsMetadata()]
+display-name: calculate() проставляет время и метку времени
+]]></system-out>
+</testcase>
+<testcase name="pointsInsideArea(double, double, double)[4]" classname="isaxel.models.CheckPointTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.models.CheckPointTest]/[test-template:pointsInsideArea(double, double, double)]/[test-template-invocation:#4]
+display-name: (1.5; 3), R=3 -> внутри
+]]></system-out>
+</testcase>
+<testcase name="pointsOutsideArea(double, double, double)[3]" classname="isaxel.models.CheckPointTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.models.CheckPointTest]/[test-template:pointsOutsideArea(double, double, double)]/[test-template-invocation:#3]
+display-name: (2; -1), R=3 -> снаружи
+]]></system-out>
+</testcase>
+<testcase name="describeInRussian()" classname="isaxel.MainTest" time="0.018">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.MainTest]/[method:describeInRussian()]
+display-name: Русская локаль подставляется в результат
+]]></system-out>
+</testcase>
+<testcase name="pointsInsideArea(double, double, double)[3]" classname="isaxel.models.CheckPointTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.models.CheckPointTest]/[test-template:pointsInsideArea(double, double, double)]/[test-template-invocation:#3]
+display-name: (1; 2), R=3 -> внутри
+]]></system-out>
+</testcase>
+<testcase name="pointsOutsideArea(double, double, double)[2]" classname="isaxel.models.CheckPointTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.models.CheckPointTest]/[test-template:pointsOutsideArea(double, double, double)]/[test-template-invocation:#2]
+display-name: (2; 2), R=3 -> снаружи
+]]></system-out>
+</testcase>
+<testcase name="pointsOutsideArea(double, double, double)[1]" classname="isaxel.models.CheckPointTest" time="0.002">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.models.CheckPointTest]/[test-template:pointsOutsideArea(double, double, double)]/[test-template-invocation:#1]
+display-name: (-3; 3), R=3 -> снаружи
+]]></system-out>
+</testcase>
+<testcase name="describeInsidePoint()" classname="isaxel.MainTest" time="0.002">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.MainTest]/[method:describeInsidePoint()]
+display-name: Описание результата для точки внутри области
+]]></system-out>
+</testcase>
+<testcase name="russianBundleIsLoaded()" classname="isaxel.i18n.MessagesTest" time="0.01">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.i18n.MessagesTest]/[method:russianBundleIsLoaded()]
+display-name: Русская локаль читается из messages_ru.properties
+]]></system-out>
+</testcase>
+<testcase name="defaultBundleIsLoaded()" classname="isaxel.i18n.MessagesTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.i18n.MessagesTest]/[method:defaultBundleIsLoaded()]
+display-name: Значения по умолчанию читаются из messages.properties
+]]></system-out>
+</testcase>
+<testcase name="originIsInside()" classname="isaxel.models.CheckPointTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.models.CheckPointTest]/[method:originIsInside()]
+display-name: Точка (0;0) принадлежит области при любом R
+]]></system-out>
+</testcase>
+<testcase name="constructorKeepsArguments()" classname="isaxel.models.CheckPointTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.models.CheckPointTest]/[method:constructorKeepsArguments()]
+display-name: Конструктор сохраняет параметры точки
+]]></system-out>
+</testcase>
+<testcase name="formatSubstitutesArguments()" classname="isaxel.i18n.MessagesTest" time="0.058">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.i18n.MessagesTest]/[method:formatSubstitutesArguments()]
+display-name: Подстановка параметров в локализованную строку
+]]></system-out>
+</testcase>
+<testcase name="technicalKeysAreInherited()" classname="isaxel.i18n.MessagesTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.i18n.MessagesTest]/[method:technicalKeysAreInherited()]
+display-name: Отсутствующие в ru-файле ключи наследуются из файла по умолчанию
+]]></system-out>
+</testcase>
+<testcase name="pointsInsideArea(double, double, double)[2]" classname="isaxel.models.CheckPointTest" time="0.002">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.models.CheckPointTest]/[test-template:pointsInsideArea(double, double, double)]/[test-template-invocation:#2]
+display-name: (-2; 2), R=3 -> внутри
+]]></system-out>
+</testcase>
+<testcase name="pointsInsideArea(double, double, double)[1]" classname="isaxel.models.CheckPointTest" time="0.026">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:isaxel.models.CheckPointTest]/[test-template:pointsInsideArea(double, double, double)]/[test-template-invocation:#1]
+display-name: (-1; 1), R=3 -> внутри
+]]></system-out>
+</testcase>
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]
+display-name: JUnit Jupiter
+]]></system-out>
+</testsuite>
