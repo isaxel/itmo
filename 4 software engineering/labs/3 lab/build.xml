@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="lab3" default="build" basedir="." xmlns:if="ant:if" xmlns:unless="ant:unless">
+
+    <property file="build.properties"/>
+
+    <path id="compile.classpath">
+        <fileset dir="${lib.compile.dir}" includes="*.jar" erroronmissingdir="false"/>
+        <fileset dir="${lib.runtime.dir}" includes="*.jar" erroronmissingdir="false"/>
+    </path>
+    <path id="test.compile.classpath">
+        <pathelement location="${classes.main.dir}"/>
+        <path refid="compile.classpath"/>
+        <fileset dir="${lib.test.dir}" includes="*.jar" erroronmissingdir="false"/>
+    </path>
+    <path id="test.runtime.classpath">
+        <pathelement location="${classes.main.dir}"/>
+        <pathelement location="${classes.test.dir}"/>
+        <path refid="compile.classpath"/>
+    </path>
+
+    <target name="init">
+        <mkdir dir="${classes.main.dir}"/>
+        <mkdir dir="${classes.test.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+        <mkdir dir="${lib.compile.dir}"/>
+        <mkdir dir="${lib.runtime.dir}"/>
+        <mkdir dir="${lib.test.dir}"/>
+    </target>
+
+    <target name="resolve" depends="init" unless="offline">
+        <get skipexisting="true" dest="${lib.compile.dir}/jakarta.jakartaee-api-${jakartaee.version}.jar"
+             src="${maven.base.url}/jakarta/platform/jakarta.jakartaee-api/${jakartaee.version}/jakarta.jakartaee-api-${jakartaee.version}.jar"/>
+        <get skipexisting="true" dest="${lib.compile.dir}/lombok-${lombok.version}.jar"
+             src="${maven.base.url}/org/projectlombok/lombok/${lombok.version}/lombok-${lombok.version}.jar"/>
+        <get skipexisting="true" dest="${lib.runtime.dir}/primefaces-${primefaces.version}.jar"
+             src="${maven.base.url}/org/primefaces/primefaces/${primefaces.version}/primefaces-${primefaces.version}.jar"/>
+        <get skipexisting="true" dest="${lib.runtime.dir}/postgresql-${postgresql.version}.jar"
+             src="${maven.base.url}/org/postgresql/postgresql/${postgresql.version}/postgresql-${postgresql.version}.jar"/>
+        <get skipexisting="true" dest="${lib.runtime.dir}/gson-${gson.version}.jar"
+             src="${maven.base.url}/com/google/code/gson/gson/${gson.version}/gson-${gson.version}.jar"/>
+        <get skipexisting="true" dest="${lib.runtime.dir}/jquery-${jquery.version}.jar"
+             src="${maven.base.url}/org/webjars/jquery/${jquery.version}/jquery-${jquery.version}.jar"/>
+        <get skipexisting="true" dest="${lib.test.dir}/junit-platform-console-standalone-${junit.console.version}.jar"
+             src="${maven.base.url}/org/junit/platform/junit-platform-console-standalone/${junit.console.version}/junit-platform-console-standalone-${junit.console.version}.jar"/>
+    </target>
+
+    <target name="manifest" depends="init">
+        <manifest file="${manifest.file}">
+            <attribute name="Implementation-Title" value="${project.title}"/>
+            <attribute name="Implementation-Version" value="${project.version}"/>
+            <attribute name="Implementation-Vendor" value="${project.vendor}"/>
+            <attribute name="Main-Class" value="${main.class}"/>
+            <attribute name="Built-By" value="${user.name}"/>
+        </manifest>
+    </target>
+
+    <target name="compile" depends="resolve">
+        <javac srcdir="${src.main.dir}" destdir="${classes.main.dir}" release="${java.release}"
+               encoding="${encoding}" includeantruntime="false" debug="true">
+            <classpath refid="compile.classpath"/>
+            <compilerarg line="-parameters ${javac.extra.args}"/>
+        </javac>
+        <copy todir="${classes.main.dir}"><fileset dir="${resources.dir}"/></copy>
+    </target>
+
+    <target name="build" depends="compile,manifest">
+        <jar destfile="${jar.file}" basedir="${classes.main.dir}" manifest="${manifest.file}"/>
+    </target>
+
+    <target name="build_war" depends="compile,manifest">
+        <war destfile="${war.file}" webxml="${webapp.dir}/WEB-INF/web.xml" manifest="${manifest.file}">
+            <fileset dir="${webapp.dir}" excludes="WEB-INF/web.xml"/>
+            <classes dir="${classes.main.dir}"/>
+            <lib dir="${lib.runtime.dir}" includes="*.jar"/>
+        </war>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+
+    <target name="compile-tests" depends="build">
+        <javac srcdir="${src.test.dir}" destdir="${classes.test.dir}" release="${java.release}"
+               encoding="${encoding}" includeantruntime="false" debug="true">
+            <classpath refid="test.compile.classpath"/>
+            <compilerarg line="${javac.extra.args}"/>
+        </javac>
+    </target>
+
+    <target name="test" depends="build,compile-tests">
+        <delete dir="${junit.reports.dir}"/>
+        <mkdir dir="${junit.reports.dir}"/>
+        <pathconvert property="test.cp" refid="test.runtime.classpath"/>
+        <java jar="${lib.test.dir}/junit-platform-console-standalone-${junit.console.version}.jar"
+              fork="true" failonerror="true">
+            <jvmarg line="${test.jvm.args}"/>
+            <arg value="--class-path"/>
+            <arg value="${test.cp}"/>
+            <arg line="--scan-class-path=${classes.test.dir} --reports-dir=${junit.reports.dir} --details=tree --disable-ansi-colors"/>
+        </java>
+    </target>
+
+    <target name="music" depends="build">
+        <exec executable="powershell" osfamily="windows" failonerror="false" failifexecutionfails="false">
+            <arg value="-NoProfile"/>
+            <arg value="-Command"/>
+            <arg value="(New-Object Media.SoundPlayer '${music.file.windows}').PlaySync();"/>
+        </exec>
+        <exec executable="${music.command.unix}" osfamily="unix" failonerror="false" failifexecutionfails="false">
+            <arg value="${music.file.unix}"/>
+        </exec>
+    </target>
+
+    <target name="native2ascii" depends="init">
+        <delete dir="${native2ascii.dir}"/>
+        <mkdir dir="${native2ascii.dir}"/>
+        <native2ascii src="${resources.dir}" dest="${native2ascii.dir}" encoding="${encoding}"
+                      includes="${native2ascii.includes}" implementation="builtin"/>
+        <echo message="converted copies: ${native2ascii.dir}/${i18n.dir}"/>
+    </target>
+
+    <target name="scp" depends="build">
+        <exec executable="${scp.executable}" failonerror="true">
+            <arg line="${scp.options}"/>
+            <arg value="-P"/>
+            <arg value="${scp.port}"/>
+            <arg value="${scp.artifact}"/>
+            <arg value="${scp.user}@${scp.host}:${scp.remote.dir}"/>
+        </exec>
+    </target>
+
+    <target name="doc" depends="build">
+        <delete dir="${javadoc.dir}"/>
+        <javadoc destdir="${javadoc.dir}" classpathref="compile.classpath" encoding="${encoding}"
+                 docencoding="${encoding}" charset="${encoding}" additionalparam="-Xdoclint:none">
+            <fileset dir="${src.main.dir}" includes="**/*.java"/>
+        </javadoc>
+        <mkdir dir="${checksums.dir}"/>
+        <checksum algorithm="MD5" todir="${checksums.dir}" totalproperty="project.md5">
+            <fileset dir="${src.main.dir}" includes="**/*.java"/>
+            <fileset dir="${resources.dir}" includes="**/*"/>
+        </checksum>
+        <checksum algorithm="SHA-1" todir="${checksums.dir}" totalproperty="project.sha1">
+            <fileset dir="${src.main.dir}" includes="**/*.java"/>
+            <fileset dir="${resources.dir}" includes="**/*"/>
+        </checksum>
+        <manifest file="${manifest.doc.file}">
+            <attribute name="Implementation-Title" value="${project.title}"/>
+            <attribute name="Implementation-Version" value="${project.version}"/>
+            <attribute name="Main-Class" value="${main.class}"/>
+            <attribute name="Project-Files-MD5" value="${project.md5}"/>
+            <attribute name="Project-Files-SHA1" value="${project.sha1}"/>
+        </manifest>
+        <jar destfile="${jar.file}" update="true" manifest="${manifest.doc.file}">
+            <zipfileset dir="${javadoc.dir}" prefix="javadoc"/>
+        </jar>
+        <echo message="project files MD5=${project.md5} SHA-1=${project.sha1}"/>
+    </target>
+
+    <target name="xml">
+        <xmlvalidate failonerror="true" lenient="true">
+            <fileset dir="${basedir}" includes="${xml.includes}" excludes="${xml.excludes}"/>
+        </xmlvalidate>
+    </target>
+
+    <target name="report" depends="test">
+        <exec executable="${git.executable}" failonerror="true">
+            <arg line="add -f ${junit.reports.dir}"/>
+        </exec>
+        <exec executable="${git.executable}" failonerror="false" resultproperty="report.result">
+            <arg value="commit"/>
+            <arg value="-m"/>
+            <arg value="${report.commit.message}"/>
+        </exec>
+        <echo message="git commit exit code: ${report.result} (1 = nothing to commit)"/>
+    </target>
+
+    <target name="diff">
+        <exec executable="${git.executable}" failonerror="true" outputproperty="git.status">
+            <arg line="status --porcelain"/>
+        </exec>
+        <echo message="working copy status:${line.separator}${git.status}"/>
+        <condition property="watched.changed">
+            <matches string="${git.status}" pattern="${diff.watch.pattern}" multiline="true"/>
+        </condition>
+        <echo unless:set="watched.changed" message="watched classes were not changed, nothing to commit"/>
+        <exec if:set="watched.changed" executable="${git.executable}" failonerror="true">
+            <arg line="add -A"/>
+        </exec>
+        <exec if:set="watched.changed" executable="${git.executable}" failonerror="true">
+            <arg value="commit"/>
+            <arg value="-m"/>
+            <arg value="${diff.commit.message}"/>
+        </exec>
+    </target>
+
+    <target name="history" depends="resolve">
+        <delete dir="${history.dir}"/>
+        <mkdir dir="${history.dir}"/>
+        <exec executable="${git.executable}" failonerror="true" output="${history.dir}/revisions.txt">
+            <arg line="rev-list HEAD"/>
+        </exec>
+        <antcall target="-history-step" inheritall="false">
+            <param name="history.queue" value="${history.dir}/revisions.txt"/>
+        </antcall>
+    </target>
+
+    <target name="-history-step">
+        <condition property="history.end"><length file="${history.queue}" length="1" when="less"/></condition>
+        <echo if:set="history.end" message="the very first revision is reached: the project does not compile in any revision"/>
+        <antcall unless:set="history.end" target="-history-try" inheritall="true"/>
+    </target>
+
+    <target name="-history-try">
+        <loadfile property="history.rev" srcFile="${history.queue}">
+            <filterchain><headfilter lines="1"/><striplinebreaks/></filterchain>
+        </loadfile>
+        <echo message="=== trying revision ${history.rev}"/>
+        <copy file="${history.queue}" tofile="${history.queue}.rest" overwrite="true">
+            <filterchain><headfilter lines="-1" skip="1"/></filterchain>
+        </copy>
+        <property name="rev.dir" value="${history.dir}/${history.rev}"/>
+        <exec executable="${git.executable}" failonerror="true">
+            <arg line="archive --format=zip -o ${history.dir}/${history.rev}.zip ${history.rev}"/>
+        </exec>
+        <unzip src="${history.dir}/${history.rev}.zip" dest="${rev.dir}"/>
+        <mkdir dir="${rev.dir}/classes"/>
+        <condition property="rev.nosrc">
+            <not><available file="${rev.dir}/${src.main.dir}" type="dir"/></not>
+        </condition>
+        <javac unless:set="rev.nosrc" srcdir="${rev.dir}/${src.main.dir}" destdir="${rev.dir}/classes"
+               release="${java.release}" encoding="${encoding}" includeantruntime="false"
+               failonerror="false" errorproperty="rev.failed">
+            <classpath refid="compile.classpath"/>
+        </javac>
+        <condition property="rev.failed" value="true"><isset property="rev.nosrc"/></condition>
+        <antcall if:set="rev.failed" target="-history-step" inheritall="false">
+            <param name="history.queue" value="${history.queue}.rest"/>
+            <param name="history.previous.rev" value="${history.rev}"/>
+        </antcall>
+        <antcall unless:set="rev.failed" target="-history-found" inheritall="true"/>
+    </target>
+
+    <target name="-history-found">
+        <condition property="head.ok"><not><isset property="history.previous.rev"/></not></condition>
+        <echo if:set="head.ok" message="HEAD compiles, no rollback was needed"/>
+        <exec unless:set="head.ok" executable="${git.executable}" failonerror="true" output="${history.changed.file}">
+            <arg line="diff --name-only ${history.rev} ${history.previous.rev}"/>
+        </exec>
+        <exec unless:set="head.ok" executable="${git.executable}" failonerror="true" output="${history.diff.file}">
+            <arg line="diff ${history.rev} ${history.previous.rev}"/>
+        </exec>
+        <echo unless:set="head.ok" message="last working revision: ${history.rev}${line.separator}broken revision: ${history.previous.rev}${line.separator}diff: ${history.diff.file}"/>
+    </target>
+
+    <target name="team" depends="resolve">
+        <delete dir="${team.dir}"/>
+        <mkdir dir="${team.dir}/jars"/>
+        <exec executable="${svn.executable}" failonerror="true" output="${team.dir}/svn-log.txt">
+            <arg line="log -q -l ${team.revision.count} ${svn.url}"/>
+        </exec>
+        <copy file="${team.dir}/svn-log.txt" tofile="${team.dir}/revisions.txt" overwrite="true">
+            <filterchain>
+                <linecontainsregexp><regexp pattern="^r[0-9]+"/></linecontainsregexp>
+                <replaceregex pattern="^r([0-9]+).*$" replace="\1"/>
+            </filterchain>
+        </copy>
+        <antcall target="-team-step" inheritall="false">
+            <param name="team.queue" value="${team.dir}/revisions.txt"/>
+        </antcall>
+        <zip destfile="${team.zip}" basedir="${team.dir}/jars"/>
+    </target>
+
+    <target name="-team-step">
+        <condition property="team.end"><length file="${team.queue}" length="1" when="less"/></condition>
+        <antcall unless:set="team.end" target="-team-build" inheritall="true"/>
+    </target>
+
+    <target name="-team-build">
+        <loadfile property="team.rev" srcFile="${team.queue}">
+            <filterchain><headfilter lines="1"/><striplinebreaks/></filterchain>
+        </loadfile>
+        <copy file="${team.queue}" tofile="${team.queue}.rest" overwrite="true">
+            <filterchain><headfilter lines="-1" skip="1"/></filterchain>
+        </copy>
+        <property name="rev.dir" value="${team.dir}/r${team.rev}"/>
+        <exec executable="${svn.executable}" failonerror="true">
+            <arg line="export --force -r ${team.rev} ${svn.url} ${rev.dir}"/>
+        </exec>
+        <copy todir="${rev.dir}/${lib.dir}"><fileset dir="${lib.dir}"/></copy>
+        <ant dir="${rev.dir}" target="build" inheritall="false">
+            <property name="project.name" value="${project.name}-r${team.rev}"/>
+            <property name="offline" value="true"/>
+        </ant>
+        <copy file="${rev.dir}/${dist.dir}/${project.name}-r${team.rev}.jar" todir="${team.dir}/jars"/>
+        <antcall target="-team-step" inheritall="false">
+            <param name="team.queue" value="${team.queue}.rest"/>
+        </antcall>
+    </target>
+
+    <target name="env" depends="build">
+        <antcall target="-env-run">
+            <param name="run.name" value="${env.1.name}"/>
+            <param name="run.java.home" value="${env.1.java.home}"/>
+            <param name="run.jvm.args" value="${env.1.jvm.args}"/>
+            <param name="run.program.args" value="${env.1.program.args}"/>
+        </antcall>
+        <antcall target="-env-run">
+            <param name="run.name" value="${env.2.name}"/>
+            <param name="run.java.home" value="${env.2.java.home}"/>
+            <param name="run.jvm.args" value="${env.2.jvm.args}"/>
+            <param name="run.program.args" value="${env.2.program.args}"/>
+        </antcall>
+    </target>
+
+    <target name="-env-run">
+        <echo message="=== environment: ${run.name}"/>
+        <exec executable="${run.java.home}/bin/java" failonerror="true">
+            <arg line="${run.jvm.args}"/>
+            <arg value="-jar"/>
+            <arg value="${jar.file}"/>
+            <arg line="${run.program.args}"/>
+        </exec>
+    </target>
+
+    <target name="alt" depends="resolve">
+        <delete dir="${alt.dir}"/>
+        <copy todir="${alt.dir}">
+            <fileset dir="${basedir}" includes="${src.main.dir}/**,${resources.dir}/**,${webapp.dir}/**,build.xml,build.properties"/>
+        </copy>
+        <copy todir="${alt.dir}/${lib.dir}"><fileset dir="${lib.dir}"/></copy>
+
+        <replaceregexp match="\b${alt.class.old}\b" replace="${alt.class.new}" flags="g" byline="true">
+            <fileset dir="${alt.dir}" includes="${alt.replace.includes}"/>
+        </replaceregexp>
+        <replaceregexp match="\b${alt.var.old}\b" replace="${alt.var.new}" flags="g" byline="true">
+            <fileset dir="${alt.dir}" includes="${alt.replace.includes}"/>
+        </replaceregexp>
+        <replaceregexp match="\b${alt.getter.old}\b" replace="${alt.getter.new}" flags="g" byline="true">
+            <fileset dir="${alt.dir}" includes="${alt.replace.includes}"/>
+        </replaceregexp>
+        <move file="${alt.dir}/${src.main.dir}/${alt.class.dir}/${alt.class.old}.java"
+              tofile="${alt.dir}/${src.main.dir}/${alt.class.dir}/${alt.class.new}.java"/>
+
+        <ant dir="${alt.dir}" target="build" inheritall="false">
+            <property name="project.name" value="${alt.project.name}"/>
+            <property name="offline" value="true"/>
+        </ant>
+        <copy file="${alt.dir}/${dist.dir}/${alt.project.name}.jar" tofile="${alt.jar}"/>
+    </target>
+
+</project>
