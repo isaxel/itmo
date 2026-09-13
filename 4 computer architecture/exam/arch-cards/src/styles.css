@@ -1,0 +1,128 @@
+:root{
+  --bg:#E7EBE9; --surface:#FBFCFB; --surface-2:#F0F3F1; --sunken:#DDE2E0;
+  --ink:#14191A; --ink-soft:#3A4446; --muted:#5F6A6B; --line:#C7CFCC; --line-soft:#D8DEDB;
+  --accent:#0E6B70; --accent-ink:#0A4E52; --accent-wash:#D8E7E7; --on-accent:#FBFCFB;
+  --signal:#A9631A; --ok:#2E6B4A;
+  --shadow:0 1px 0 rgba(20,25,26,.05), 0 12px 32px -18px rgba(20,25,26,.45);
+  --font-ui:"Golos Text","Segoe UI",system-ui,sans-serif;
+  --font-read:"Literata",Georgia,"Times New Roman",serif;
+  --font-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1413; --surface:#161C1B; --surface-2:#1C2322; --sunken:#0B100F;
+    --ink:#E7ECEA; --ink-soft:#C3CCC9; --muted:#8E9997; --line:#2B3433; --line-soft:#222A29;
+    --accent:#4EBFC4; --accent-ink:#7FD6D9; --accent-wash:#12302F; --on-accent:#08201F;
+    --signal:#D89B4E; --ok:#5FBE8C;
+    --shadow:0 1px 0 rgba(0,0,0,.4), 0 18px 40px -22px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1413; --surface:#161C1B; --surface-2:#1C2322; --sunken:#0B100F;
+  --ink:#E7ECEA; --ink-soft:#C3CCC9; --muted:#8E9997; --line:#2B3433; --line-soft:#222A29;
+  --accent:#4EBFC4; --accent-ink:#7FD6D9; --accent-wash:#12302F; --on-accent:#08201F;
+  --signal:#D89B4E; --ok:#5FBE8C;
+  --shadow:0 1px 0 rgba(0,0,0,.4), 0 18px 40px -22px rgba(0,0,0,.9);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-ui);
+  -webkit-font-smoothing:antialiased;font-size:16px;line-height:1.5}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+.shell{max-width:1080px;margin:0 auto;padding:20px 20px 40px;display:flex;flex-direction:column;gap:18px;min-height:100dvh}
+
+/* --- Топ-панель --- */
+.masthead{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 16px;
+  padding-bottom:12px;border-bottom:1px solid var(--line)}
+.masthead h1{margin:0;font-size:19px;font-weight:600;letter-spacing:-.01em}
+.masthead .sub{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted)}
+.masthead .spacer{flex:1 1 40px}
+.themebtn{background:none;border:1px solid var(--line);border-radius:999px;padding:4px 12px;
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);cursor:pointer}
+.themebtn:hover{color:var(--ink);border-color:var(--muted)}
+
+/* --- Управление колодой --- */
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.field{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);
+  border-radius:6px;padding:6px 10px}
+.field label{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--muted)}
+select{background:transparent;border:none;font-size:14px;max-width:min(48vw,260px);cursor:pointer}
+.toggle{display:flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--line);
+  border-radius:6px;padding:7px 11px;font-size:13.5px;cursor:pointer;user-select:none}
+.toggle input{accent-color:var(--accent);margin:0;width:14px;height:14px}
+.ghost{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:7px 13px;
+  font-size:13.5px;cursor:pointer;display:inline-flex;gap:7px;align-items:center}
+.ghost:hover{border-color:var(--accent);color:var(--accent-ink)}
+.ghost kbd{font-family:var(--font-mono);font-size:10px;color:var(--muted);
+  border:1px solid var(--line);border-radius:3px;padding:0 4px}
+
+/* --- Шина прогресса (линия шины: тик на каждую карточку) --- */
+.bus{display:flex;flex-direction:column;gap:7px}
+.bus-line{display:flex;gap:1px;height:16px;align-items:stretch;overflow:hidden;
+  background:var(--sunken);border:1px solid var(--line-soft);border-radius:3px;padding:2px}
+.tick{flex:1 1 0;min-width:1px;background:var(--line);border-radius:1px}
+.tick.done{background:var(--accent)}
+.tick.here{background:var(--signal);transform:scaleY(1.0)}
+.bus-meta{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--font-mono);font-size:11px;
+  letter-spacing:.05em;color:var(--muted);font-variant-numeric:tabular-nums}
+.bus-meta b{color:var(--ink);font-weight:500}
+
+/* --- Карточка --- */
+.stage{perspective:2200px;flex:1 1 auto;min-height:0}
+.card{position:relative;width:100%;height:100%;min-height:min(68vh,560px);
+  transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.7,.2,1);cursor:pointer}
+.card.flipped{transform:rotateX(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);
+  display:flex;flex-direction:column;overflow:hidden}
+.face.back{transform:rotateX(180deg)}
+.face-head{display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid var(--line-soft);
+  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.face-head .no{color:var(--ink);font-variant-numeric:tabular-nums}
+.face-head .side{margin-left:auto;color:var(--accent-ink)}
+.face.back .face-head .side{color:var(--signal)}
+.topic-chip{border:1px solid var(--line);border-radius:999px;padding:2px 9px;color:var(--ink-soft);
+  letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:50%}
+.face-body{padding:26px 26px 30px;overflow-y:auto;flex:1 1 auto;scrollbar-width:thin;
+  scrollbar-color:var(--line) transparent}
+.face.front .face-body{display:flex;flex-direction:column;justify-content:center}
+.face::after{content:"";position:absolute;left:1px;right:1px;bottom:35px;height:38px;pointer-events:none;
+  background:linear-gradient(to top,var(--surface) 20%,rgba(0,0,0,0))}
+.q{font-size:clamp(19px,2.6vw,27px);line-height:1.32;font-weight:500;letter-spacing:-.015em;
+  text-wrap:balance;margin:0;max-width:30ch}
+.learned-mark{margin-top:18px;font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ok);display:none}
+.card.is-learned .learned-mark{display:block}
+.a{font-family:var(--font-read);font-size:15.5px;line-height:1.6;color:var(--ink-soft);
+  display:flex;flex-direction:column;gap:10px;max-width:78ch}
+.a p{margin:0;padding-left:18px;position:relative}
+.a p::before{content:"";position:absolute;left:0;top:.62em;width:9px;height:1px;background:var(--accent)}
+.a p:first-child{padding-left:0;color:var(--ink);font-size:16.5px}
+.a p:first-child::before{display:none}
+.hint{text-align:center;font-family:var(--font-mono);font-size:11px;letter-spacing:.07em;
+  color:var(--muted);padding:9px 16px;border-top:1px dashed var(--line-soft)}
+
+/* --- Нижняя панель --- */
+.deck-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center}
+.nav{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:9px 15px;
+  font-size:14px;cursor:pointer;min-width:44px}
+.nav:hover{border-color:var(--accent);color:var(--accent-ink)}
+.primary{background:var(--accent);border:1px solid var(--accent);color:var(--on-accent);border-radius:6px;
+  padding:9px 20px;font-size:14px;font-weight:500;cursor:pointer}
+.primary:hover{filter:brightness(1.07)}
+.keys{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;font-family:var(--font-mono);
+  font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.keys kbd{border:1px solid var(--line);border-radius:3px;padding:1px 5px;color:var(--ink-soft)}
+@media (max-width:640px){
+  .shell{padding:14px 13px 26px;gap:14px}
+  .face-body{padding:20px 18px 24px}
+  .a{font-size:15px}
+  .keys{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .card{transition:none}
+}

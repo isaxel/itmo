@@ -1,0 +1,15 @@
+{
+  "name": "arch-cards",
+  "version": "1.0.0",
+  "description": "Тренажёр экзаменационных карточек по курсу «Архитектура компьютера»: 234 вопроса с развёрнутыми ответами.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "export": "node scripts/export.mjs",
+    "start": "npm run build && node -e \"import('node:http').then(async ({default:h})=>{const fs=await import('node:fs'),p=await import('node:path');const t={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.webmanifest':'application/manifest+json'};h.createServer((q,s)=>{let f=p.join('dist',decodeURIComponent(q.url.split('?')[0]));if(q.url==='/'||q.url==='')f='dist/index.html';fs.readFile(f,(e,d)=>{if(e){s.writeHead(404);return s.end('404')}s.writeHead(200,{'content-type':t[p.extname(f)]||'application/octet-stream'});s.end(d)})}).listen(8080,()=>console.log('http://localhost:8080'))})\"",
+    "all": "npm run build && npm run export"
+  },
+  "keywords": ["flashcards", "computer-architecture", "spaced-repetition", "exam"],
+  "license": "CC-BY-4.0"
+}

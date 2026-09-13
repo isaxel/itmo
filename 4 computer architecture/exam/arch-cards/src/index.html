@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Тренажёр из 234 экзаменационных карточек по курсу «Архитектура компьютера»: вопрос — ответ, режим Quizlet.">
+<meta name="theme-color" content="#0E6B70">
+<title>Карточки по архитектуре компьютера</title>
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&display=swap">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<div class="shell">
+  <header class="masthead">
+    <h1>Карточки по архитектуре компьютера</h1>
+    <span class="sub">Экзамен 2026 · 234 вопроса</span>
+    <span class="spacer"></span>
+    <button class="themebtn" id="themeBtn" type="button">тема</button>
+  </header>
+
+  <div class="controls">
+    <div class="field">
+      <label for="topic">Раздел</label>
+      <select id="topic"></select>
+    </div>
+    <label class="toggle"><input type="checkbox" id="onlyNew"> Только невыученные</label>
+    <label class="toggle"><input type="checkbox" id="shuffle"> Перемешать</label>
+    <button class="ghost" id="resetBtn" type="button">Сбросить прогресс</button>
+  </div>
+
+  <div class="bus">
+    <div class="bus-line" id="busLine"></div>
+    <div class="bus-meta">
+      <span>Карточка <b id="pos">1</b> / <b id="total">234</b></span>
+      <span>Выучено <b id="doneCount">0</b> из <b id="deckCount">234</b></span>
+      <span id="qno">Вопрос №1</span>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="card" id="card">
+      <div class="face front">
+        <div class="face-head"><span class="no" id="frontNo">01</span><span class="topic-chip" id="frontTopic">—</span><span class="side">вопрос</span></div>
+        <div class="face-body"><p class="q" id="qText">—</p><div class="learned-mark">✓ отмечено как выученное</div></div>
+        <div class="hint">Пробел — перевернуть · ← → — листать</div>
+      </div>
+      <div class="face back">
+        <div class="face-head"><span class="no" id="backNo">01</span><span class="topic-chip" id="backTopic">—</span><span class="side">ответ</span></div>
+        <div class="face-body"><div class="a" id="aText"></div></div>
+        <div class="hint">Enter — «знаю» · Пробел — назад к вопросу</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="deck-controls">
+    <button class="nav" id="prevBtn" type="button">← Назад</button>
+    <button class="primary" id="flipBtn" type="button">Перевернуть</button>
+    <button class="nav" id="knowBtn" type="button">✓ Знаю</button>
+    <button class="nav" id="nextBtn" type="button">Вперёд →</button>
+  </div>
+  <div class="keys">
+    <span><kbd>Space</kbd> перевернуть</span>
+    <span><kbd>←</kbd><kbd>→</kbd> листать</span>
+    <span><kbd>Enter</kbd> знаю / не знаю</span>
+    <span><kbd>S</kbd> перемешать</span>
+    <span><kbd>R</kbd> случайная карточка</span>
+  </div>
+</div>
+
+<script src="./app.js"></script>
+<script>
+if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+  window.addEventListener("load", function(){ navigator.serviceWorker.register("./sw.js").catch(function(){}); });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Колода карточек по архитектуре компьютера",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "topic", "question", "answer"],
+    "additionalProperties": false,
+    "properties": {
+      "id": { "type": "integer", "minimum": 1, "description": "Номер вопроса в списке билетов" },
+      "topic": { "type": "string", "minLength": 2, "description": "Раздел курса, формирует фильтр" },
+      "question": { "type": "string", "minLength": 5 },
+      "answer": {
+        "type": "array",
+        "minItems": 1,
+        "items": { "type": "string", "minLength": 3 },
+        "description": "Первый элемент — суть ответа, остальные — тезисы списком"
+      }
+    }
+  }
+}
