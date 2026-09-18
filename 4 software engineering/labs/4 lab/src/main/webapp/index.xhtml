@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<head>
+    <title>Лаба3</title>
+
+    <meta name="msapplication-TileColor" content="#da532c"/>
+    <meta name="theme-color" content="#ffffff"/>
+
+    <link rel="stylesheet" href="resources/css/style.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+
+    <h:outputScript name="core.js" library="primefaces" target="head"/>
+    <h:outputScript name="components.js" library="primefaces" target="head"/>
+
+    <h:outputScript library="js" name="clock.js"/>
+</head>
+<body>
+<div class="content">
+    <h1 class="clock" id="clock-time"></h1>
+    <h3 class="clock-date" id="clock-date"></h3>
+    <div class="info-panel">
+        <div class="invert-colors box-visual shadow" style="margin: 25px">
+            <h1 class="main-title">Web Programming Lab №3</h1>
+            <h3>Исаева Александра-Ирина, P3209, вариант 1865</h3>
+        </div>
+        <div class="start-panel">
+            <h:button type="button" id="start-button" class="round confirm-colors material-icons"
+                      outcome="toMain" value="play_arrow"/>
+        </div>
+    </div>
+</div>
+</body>
+</html>
