@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Лабораторная работа №1</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+
+<header class="header">
+    <div class="headerName">Исаева Александра-Ирина Антоновна</div>
+    <div class="headerInfo">
+        <span class="headerItem">группа: P3309</span>
+        <span class="headerItem">вариант: 31495</span>
+    </div>
+</header>
+
+<main class="main">
+    <div class="mainLayout">
+
+        <div class="mainLeft">
+        <section class="panel panelGraph">
+            <h2 class="panelTitle">Область</h2>
+            <div class="graph">
+                <canvas id="graph" class="graphCanvas" width="400" height="400"></canvas>
+            </div>
+        </section>
+
+        <section class="panel panelForm">
+            <h2 class="panelTitle">Параметры точки</h2>
+
+            <form id="pointForm" class="form" novalidate>
+                <div class="formRow">
+                    <label for="xInput" class="formLabel">Координата X:</label>
+                    <input id="xInput" class="formInput" type="text" name="x"
+                           maxlength="12" autocomplete="off" placeholder="−5...3">
+                    <span id="xError" class="formError"></span>
+                </div>
+
+                <div class="formRow">
+                    <span class="formLabel" id="yLabel">Координата Y:</span>
+                    <div id="yRadios" class="yRadios" role="radiogroup" aria-label="Координата Y">
+                        <label class="yOption"><input type="radio" name="y" value="-3"> -3</label>
+                        <label class="yOption"><input type="radio" name="y" value="-2"> -2</label>
+                        <label class="yOption"><input type="radio" name="y" value="-1"> -1</label>
+                        <label class="yOption"><input type="radio" name="y" value="0" checked> 0</label>
+                        <label class="yOption"><input type="radio" name="y" value="1"> 1</label>
+                        <label class="yOption"><input type="radio" name="y" value="2"> 2</label>
+                        <label class="yOption"><input type="radio" name="y" value="3"> 3</label>
+                        <label class="yOption"><input type="radio" name="y" value="4"> 4</label>
+                        <label class="yOption"><input type="radio" name="y" value="5"> 5</label>
+                    </div>
+                </div>
+
+                <div class="formRow">
+                    <label for="rInput" class="formLabel">Радиус R:</label>
+                    <input id="rInput" class="formInput" type="text" name="r"
+                           maxlength="12" autocomplete="off" placeholder="1...4">
+                    <span id="rError" class="formError"></span>
+                </div>
+
+                <div class="formActions">
+                    <button type="submit" id="submitBtn" class="btn btnPrimary" disabled>Проверить</button>
+                    <button type="button" id="clearBtn" class="btn">Очистить таблицу</button>
+                </div>
+            </form>
+        </section>
+        </div>
+
+    <section class="panel panelResults">
+        <h2 class="panelTitle">Результаты проверок</h2>
+        <div class="tableWrap">
+            <table class="results">
+                <thead>
+                <tr>
+                    <th>X</th>
+                    <th>Y</th>
+                    <th>R</th>
+                    <th>Результат</th>
+                    <th>Дата и время</th>
+                </tr>
+                </thead>
+                <tbody id="resultsBody"></tbody>
+            </table>
+        </div>
+        <p id="emptyMsg" class="resultsEmpty">Проверок пока не было</p>
+    </section>
+
+    </div>
+</main>
+
+<footer class="footer">
+    <p><a href="https://github.com/isaxel" target="_blank">github</a>  •  <a href="mailto:isaxel@duck.com">isaxel@duck.com</a></p>
+</footer>
+
+<script src="index.js"></script>
+</body>
+</html>
