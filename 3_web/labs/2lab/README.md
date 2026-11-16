@@ -75,3 +75,4 @@ java -jar -DFCGI_PORT=24001 httpd-root/fcgi-bin/PROJECT-NAME.jar      # запу
 sockstat -4 -l -P tcp -p 24000                                        # посмотреть PID порта
 kill <PID>                                                            # закрыть ресурсы
 ```
+Приложение в браузере смотрим по http://localhost:8080/
