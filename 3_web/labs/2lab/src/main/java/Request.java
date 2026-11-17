@@ -14,22 +14,28 @@ class Request {
     private static final int MAX_BODY = 4096;
 
     private final Map<String, String> form;
+    private final String method;
 
-    private Request(Map<String, String> form) {
+    private Request(String method, Map<String, String> form) {
         this.form = form;
+        this.method = method;
     }
 
     static Request read() throws IOException {
         Properties params = FCGIInterface.request.params;
         String method = params.getProperty("REQUEST_METHOD", "");
-        if (!"POST".equals(method)) {
+        if (!("POST".equals(method)) && !("DELETE".equals(method))) {
             throw new UnsupportedOperationException("Метод " + method + " не поддерживается, используйте POST");
         }
-        return new Request(parseForm(readBody(params)));
+        return new Request(method, parseForm((readBody(params))));
     }
 
     String get(String name) {
         return form.get(name);
+    }
+
+    String getMethod() {
+        return method;
     }
 
     private static String readBody(Properties params) throws IOException {

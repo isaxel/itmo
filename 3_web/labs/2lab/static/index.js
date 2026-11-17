@@ -50,7 +50,7 @@ function validateCoord(input, name, min, max) {
     if (Number.isNaN(v)) {
         return { ok: false, message: `${name} должен быть числом (не больше 14 знаков после запятой)` };
     }
-    if (!(v > min && v < max)) {
+    if (!(v >= min && v <= max)) {
         return { ok: false, message: `${name} должен быть в интервале (${min} … ${max})` };
     }
     return { ok: true, value: v, raw: raw.replace(',', '.') };
@@ -128,14 +128,14 @@ async function callServer(params) {
     try {
         data = await response.json();
     } catch (e) {
-        throw new Error(`Некорректный ответ сервера (HTTP ${response.status})`);
+        throw new Error(`Некорректный ответ сервера (${response.status})`);
     }
 
     if (typeof data.serverTime === 'number') {
         serverNow.textContent = formatDate(data.serverTime);
     }
     if (!data.ok) {
-        throw new Error(data.reason || `Ошибка сервера (HTTP ${response.status})`);
+        throw new Error(data.reason || `Ошибка сервера (${response.status})`);
     }
     return data;
 }
@@ -252,17 +252,17 @@ function drawGraph() {
 
     ctx.fillStyle = '#2fb57a';
 
-    // 1 четв: прямоугольник 0 <= x <= R, 0 <= y <= R/2
+    // 1 четв: прямоугольник
     ctx.fillRect(CENTER, CENTER - R_PX / 2, R_PX, R_PX / 2);
 
     ctx.beginPath();
-    // 2 четв: треугольник (0,0), (-R/2,0), (0,R/2)
+    // 2 четв: треугольник
     ctx.moveTo(CENTER, CENTER);
     ctx.lineTo(CENTER - R_PX / 2, CENTER);
     ctx.lineTo(CENTER, CENTER - R_PX / 2);
     ctx.closePath();
 
-    // 3 четв: четверть круга радиуса R/2
+    // 3 четв: круг
     ctx.moveTo(CENTER, CENTER);
     ctx.arc(CENTER, CENTER, R_PX / 2, Math.PI / 2, Math.PI, false);
     ctx.closePath();
@@ -370,7 +370,22 @@ form.addEventListener('submit', (event) => {
 
 clearBtn.addEventListener('click', () => {
     withBusy(async () => {
-        const data = await callServer({ action: 'clear' });
+        let response;
+        try {
+            response = await fetch (API_URL, {
+                method: 'DELETE',
+                cache: 'no-cache',
+            });
+        } catch (error) {
+            throw new Error(`Сервер недоступен`);
+        }
+        let data;
+        try {
+            data = await response.json();
+        } catch (error) {
+            throw new Error(`Некорректный ответ сервера ${response.status}`);
+        }
+        if (!data.ok) throw new Error(data.reason)
         acceptResults(data.results);
     });
 });

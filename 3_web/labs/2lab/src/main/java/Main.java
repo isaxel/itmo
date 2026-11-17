@@ -27,17 +27,19 @@ public class Main {
     }
 
     private static void handle(Request req, long start) {
+        if ("DELETE".equals(req.getMethod())) {
+            storage.clear();
+            Response.ok(storage.getAll());
+            return;
+        }
+
         String action = req.get("action");
 
         if ("list".equals(action)) {
             Response.ok(storage.getAll());
             return;
         }
-        if ("clear".equals(action)) {
-            storage.clear();
-            Response.ok(storage.getAll());
-            return;
-        }
+
         if (action == null) {
             Response.error(400, "Не задано действие");
             return;
@@ -62,7 +64,7 @@ public class Main {
 
     private static double parseCoord(String name, String s) {
         double v = parse(name, s);
-        if (!(v > MIN && v < MAX)) {
+        if (!(v >= MIN && v <= MAX)) {
             throw new IllegalArgumentException(name + " должно быть в интервале (-5 … 3)");
         }
         return v;
